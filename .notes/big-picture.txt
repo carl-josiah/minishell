@@ -1,0 +1,26 @@
+cool websites: 
+- https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Syntax
+- https://pubs.opengroup.org/onlinepubs/7908799/xcu/chap2.html
+- https://www.youtube.com/watch?v=ubt-UjcQUYg (goated)
+
+in the context of compilers, interpreters, and shells
+tokenize means: are meaniningful pieces of input (commands, arguments, operators,
+quoted strings, numbers)
+
+in every interpreter, shell, or compiler
+lexical -> parsing -> semantic analysis -> expansion -> execution
+
+- lexical analysis: split input into tokens (words, operators, quotes)
+- syntax analysis (parsing): checks if tokens form a valid structure (matching quotes)
+- semantic analysis: check for meaning and correctness (valid commands)
+- expansion: replace variables ($VAR), wildcards (*), and command substitutes
+- execution: run the commands
+
+- lexical = tokenize (is there a space or quotes ('5''2') between them? split them.)
+- syntax = structure (is everything in the right place?)
+- semantic = meaning (does it make sense? if not, invalid)
+- expansion = replace (just like defines)
+- execution = run program
+
+i call everything parsing for the input in almost every project, but for bigger
+projects, these steps must be separated to provide clarity
