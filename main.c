@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/15 08:25:16 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/15 14:14:41 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	count_tokens(const char *line)
 		}
 		i++;
 	}
+	return (count);
 }
 
 int main(int ac, char **av)
@@ -57,6 +58,6 @@ int main(int ac, char **av)
 		free(str);
 	}
 	// printf("tokens: %d\n",
-	count_tokens(av[1]);
+	// count_tokens(av[1]);
 	return (0);
 }
