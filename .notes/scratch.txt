@@ -1,0 +1,152 @@
+what is a shell?
+- a command line interpreter for the CLI. software application that gives users the
+ability to control the computer
+
+what is it used for?
+- allows the user to interact with the computer system
+
+point of operating systems?
+- 
+
+point of kernels?
+
+bare metal programming?
+
+flow:	user -> terminal emulator -> command line interface
+		-> shell (command line interpreter) -> kernel
+
+you can boot up without a terminal emulator and have a pure CLI without
+graphical interface
+
+human-computer interaction history:
+bits, switches, punch cards -> command line interface -> graphical user interfaces
+
+shells but CLI (runs on terminal emulator) are separate from the shell
+- zsh, bash, fish (cli)
+
+shells but GUI and the GUI itself is the interface:
+- apple's finder
+- windows's file explorer
+- linux's gnome
+
+interact with kernels:
+- system calls through programming langs
+- shells
+
+GitHub Copilot: Good — conceptual plan (no code). Follow this checklist and do the tiny experiments manually on paper/REPL strings.
+
+1) Decide the token model
+- Token has: type, value (final text), raw (exact chars), start/end positions, maybe a quoted-flag.
+- Token types: WORD, OPERATOR, REDIR_IN, REDIR_OUT, REDIR_APPEND, HEREDOC, PIPE, SEMICOLON, AND, OR, ASSIGN (env assign), EOF, ERROR.
+
+2) Define splitting rules (lexer's job only)
+- Whitespace separates tokens (but whitespace inside quotes does not).
+- Quotes (single and double) group characters into one token.
+- Backslash is an escape inside/outside quotes (rules differ: single quotes = literal, double quotes allow escapes and $-expansion later).
+- Multi-character operators must be recognized as single operator tokens: >>, <<, &&, ||.
+- Single-character operators: |, >, <, ;, &, (, ).
+- No semantic expansion: do NOT expand $VAR, globs, or PATH here — just mark positions/flags for later.
+
+3) Minimal state machine (mental model)
+- DEFAULT: read chars; on whitespace -> emit token if buffer non-empty; on operator char -> emit operator token; on quote -> switch to IN_SQUOTE or IN_DQUOTE; on backslash -> go to ESCAPE.
+- IN_SQUOTE: collect until next single-quote; everything literal.
+- IN_DQUOTE: collect until next double-quote; allow backslash escapes for " and `\$` rules (but do not expand).
+- ESCAPE: take next char literally and return to previous state.
+- At EOF: if inside quote -> error (unmatched quote). Otherwise emit final token.
+
+4) What lexer must NOT do
+- Do not perform environment-variable expansion, wildcard expansion, PATH lookup, command execution, or operator precedence resolution. Those are later stages.
+- Do not interpret whether a token is a builtin vs external; just return token type WORD (or ASSIGN if format VAR=VALUE without spaces — optional).
+
+5) Token examples (lex results)
+- Input: echo -n "hello world" | grep hi
+  - TOKS: WORD(echo), WORD(-n), WORD(hello world) [double quoted], OP(|), WORD(grep), WORD(hi)
+- Input: VAR=1 ls -l > out.txt
+  - TOKS: WORD(VAR=1) [mark as possible assignment], WORD(ls), WORD(-l), REDIR_OUT(>), WORD(out.txt)
+- Input: cat '5'+'5'
+  - TOKS: WORD(cat), WORD('5'+'5') (single token because no spaces)
+- Input: echo "unclosed
+  - Lexer should return ERROR: unmatched quote at position X.
+
+6) Edge cases to test manually
+- Adjacent operators: ls|||grep  -> OP(|), OP(|), OP(|) or should be error? Decide: treat repeated pipes as sequence of single-operator tokens and let parser detect invalid syntax.
+- No-space redirections: cmd>out  -> WORD(cmd), REDIR_OUT(>), WORD(out)
+- Escapes: echo hello\ world  -> WORD(hello world)
+- Quotes + escapes inside double quotes: echo "a\"b"  -> WORD(a"b)
+- Empty tokens: "" or '' should produce a WORD with empty value
+- Heredoc markers: <<EOF  -> HEREDOC operator token then WORD(EOF)
+
+7) Integration notes for next steps
+- Make lexer produce a linear token list with positions; parser consumes tokens into commands/pipelines and can report precise syntax errors using start/end.
+- Mark tokens that came from quotes (so expansion stage can later decide what to expand).
+- Keep raw text in tokens to allow accurate error messages and here-doc delimiter comparisons.
+
+8) Tiny manual exercises (do these by hand)
+- Take 10 sample lines (include the edge cases above) and write the token stream.
+- For each, annotate what the parser should later accept or reject.
+- For a tricky input, try two interpretations (e.g., multiple operators) to decide whether lexer or parser rejects.
+
+9) Error policy
+- Lexer should only reject lexical errors (unclosed quote, lone backslash at EOF, invalid multibyte sequences).
+- Anything structural (pipe with no command, redirection missing filename) belongs to parser/semantic stage.
+
+10) Implementation checklist when you start coding
+- Start by implementing the FSM for DEFAULT/IN_SQUOTE/IN_DQUOTE/ESCAPE.
+- Add operator recognition.
+- Add token data structure and tests.
+- Then feed those tokens to a simple parser.
+
+If you want, give me 5 example input lines and I’ll show the exact token lists (no code) so you can verify your token rules.
+
+carl-josiah: all i want is for it to be able to count the tokens
+
+GitHub Copilot: Plan: implement a small lexer that only counts tokens (no expansions, no parsing). Key rules to use and a tiny FSM + examples.
+
+Rules (use these exactly)
+- Whitespace (space, tab) separates tokens, but whitespace inside quotes does not.
+- Single-quote: everything until next single-quote is one token (literal).
+- Double-quote: everything until next double-quote is one token (allow backslash to escape quote).
+- Backslash escapes the next char (treat escaped char as literal).
+- Recognize multi-char operators as single tokens: >>, <<, &&, ||.
+- Recognize single-char operators as single tokens: |, >, <, ;, &, (, ).
+- Any other run of non-space, non-operator characters (including = in VAR=1) is one token.
+- If an unmatched quote or dangling backslash at EOF → return error (do not return a count).
+
+Tiny FSM (conceptual)
+- STATE = DEFAULT | IN_SQUOTE | IN_DQUOTE | ESCAPE
+- buffer_empty = true
+- count = 0
+- i = 0..n-1 over input chars:
+  - DEFAULT:
+    - if char is whitespace: if buffer_nonempty → emit token (count++), clear buffer
+    - else if start of multi-char operator (check 2-char first) → if buffer_nonempty emit; emit operator token (count++); advance accordingly
+    - else if char is single-operator → if buffer_nonempty emit; emit operator token (count++)
+    - else if char == '\'' → enter IN_SQUOTE (start token if buffer empty)
+    - else if char == '"' → enter IN_DQUOTE (start token if buffer empty)
+    - else if char == '\\' → enter ESCAPE (start token if buffer empty)
+    - else add char to buffer (start token if buffer empty)
+  - IN_SQUOTE:
+    - if char == '\'' → exit IN_SQUOTE (finish token)
+    - else add char (still in same token)
+  - IN_DQUOTE:
+    - if char == '\\' → next char treated literally (handle escapes)
+    - else if char == '"' → exit IN_DQUOTE (finish token)
+    - else add char
+  - ESCAPE:
+    - add next char to buffer, return to previous state
+- After loop: if in IN_SQUOTE or IN_DQUOTE or ESCAPE → error (unmatched)
+- If buffer_nonempty → emit token (count++)
+
+Examples (token counts)
+- echo -n "hello"              → 3 tokens
+- VAR=1 ls -l > out.md         → 5 tokens (WORD(VAR=1), WORD(ls), WORD(-l), REDIR_OUT, WORD(out.md))
+- cat '5'+'5'                  → 2 tokens (cat, '5'+'5')
+- echo "hello world" | grep hi → 5 tokens (echo, "hello world", |, grep, hi)
+- echo -n'm' "hello"           → 3 tokens (echo, -n'm', "hello")
+- ls|||grep                    → tokens: ls, |, |, |, grep (lexer emits single-char pipes; parser will reject)
+
+Error cases
+- Unmatched quote → return error / -1
+- Trailing backslash → return error / -1
+
+If you want, I can produce a tiny C function next that implements this FSM and returns the token count (or -1 on lexical error).
