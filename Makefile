@@ -6,22 +6,32 @@
 #    By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 11:09:47 by ccastro           #+#    #+#              #
-#    Updated: 2025/08/15 09:00:14 by ccastro          ###   ########.fr        #
+#    Updated: 2025/08/19 12:37:30 by ccastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = -g3 -O3
+NAME	= minishell
 
-all: ./main
-	cc $(FLAGS) -lreadline main.c -o main
+SRCS	= $(addsuffix .c, minishell)
 
-./main: main.o ft_split.o ft_strlen.o ft_strdup.o ft_substr.o
-	cc -c main.c ft_split.c ft_strlen.c ft_strdup.c ft_substr.c
+OBJS	= $(SRCS:%.c=%.o)
+
+RDL		= -lreadline
+
+FLAGS	= -g3 -O3
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	cc $(FLAGS) $(RDL) $^ -o $@
+
+%.o: %.c
+	cc $(FLAGS) -c $<
 
 clean:
-	rm -f main.o ft_split.o ft_strlen.o ft_strdup.o ft_substr.o
+	rm -f $(OBJS)
 
 fclean: clean
-	rm -f ./main
+	rm -f $(NAME)
 
 re: fclean all
