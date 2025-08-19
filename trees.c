@@ -47,17 +47,17 @@ int	main(int argc, char *argv[])
 	right = malloc(sizeof(*right));
 
 	head->type = OPS;
-	head->value.op = '*';
+	head->value.op = '+';
 	head->left = left;
 	head->right = right;
 
 	left->type = NUM;
-	left->value.num = 5;
+	left->value.num = 10;
 	left->left = NULL;
 	left->right = NULL;
 
 	right->type = NUM;
-	right->value.num = 10;
+	right->value.num = 5;
 	right->left = NULL;
 	right->right = NULL;
 

@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/19 16:54:07 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/19 15:39:14 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/19 15:39:37 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	count_tokens(const char *line)
 {
-	char	*str;
+	int	i;
+	int	count;
+	int	flag;
 
-	// while (1)
-	// {
-		// execve(cmd, args, env);
-		char *cmd = av[1];
-		char **args = malloc(1000);
-		args[0] = av[1];
-		args[1] = av[2];
-		args[2] = NULL;
-		execve(cmd, args, env); 
-		printf("%s: not found\n", av[1]);
-		// str = readline("bukoshell$ ");
-		// if (!str)
-		// 	break ;
-		// if (str && *str)
-		// 	add_history(str);
-		// free(s:tr);
-	// }
-	return (0);
+	i = 0;
+	count = 0;
+	flag = 0;
+	while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
+		i++;
+	while (line[i])
+	{
+		if (flag == 0)
+		{
+			count++;
+			flag = 1;
+		}
+		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
+		{
+			flag = 0;
+			i++;
+		}
+		i++;
+	}
+	return (count);
 }
