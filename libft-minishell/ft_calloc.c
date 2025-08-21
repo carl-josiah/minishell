@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccastro <ccastro@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 17:13:46 by ccastro           #+#    #+#             */
-/*   Updated: 2024/08/26 14:23:42 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/20 11:33:13 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	char	*s;
 
-	if (size && count >= SIZE_MAX / size)
+	if (size && count >= 18446744073709551615UL / size)
 		return (NULL);
 	s = (char *) malloc(size * count);
 	if (!s)

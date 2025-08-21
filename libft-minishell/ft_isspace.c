@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/20 12:28:11 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/20 12:29:19 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/20 12:29:27 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **env)
+int	ft_isspace(int c)
 {
-	t_token			tokens;
-	t_token_type	type;
-	char			*str;
-
-	(void) ac;
-	(void) av;
-	while (1)
-	{
-		str = readline("bukoshell$ ");
-		if (!str)
-			break ;
-		if (str && *str)
-			add_history(str);
-		lexer(str, type, tokens);
-		free(str);
-	}
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
 	return (0);
 }

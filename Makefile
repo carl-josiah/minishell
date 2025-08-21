@@ -6,7 +6,7 @@
 #    By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 11:09:47 by ccastro           #+#    #+#              #
-#    Updated: 2025/08/19 13:30:13 by ccastro          ###   ########.fr        #
+#    Updated: 2025/08/20 11:35:08 by ccastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RDL		= -lreadline
 
 FLAGS	= -g3 -O3
 
-LIBDIR	= libft
+LIBDIR	= libft-minishell
 
 LIBFT	= $(LIBDIR)/libft.a
 

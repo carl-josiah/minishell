@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:25:49 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/19 16:43:21 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/20 12:18:36 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include "libft/libft.h"
+# include "libft-minishell/libft.h"
 
 typedef enum s_token_type
 {
@@ -28,6 +28,10 @@ typedef enum s_token_type
 	TOKEN_REDIR,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
+	TOKEN_RPAREN,
+	TOKEN_LPAREN,
+	TOKEN_AND,
+	TOKEN_OR,
 }	t_token_type;
 
 typedef struct s_token

@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/20 12:28:11 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/20 11:38:51 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/20 12:54:37 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **env)
+int	is_special(char *str)
 {
-	t_token			tokens;
-	t_token_type	type;
-	char			*str;
-
-	(void) ac;
-	(void) av;
-	while (1)
+	if (*str == '>')
 	{
-		str = readline("bukoshell$ ");
-		if (!str)
-			break ;
-		if (str && *str)
-			add_history(str);
-		lexer(str, type, tokens);
-		free(str);
+		if (*(str++) == '>')
+			return (2);
+		else
+			return (1);
 	}
-	return (0);
+	if (*str == '<')
+	{
+		
+	}
+}
+
+int	lexer(char *str, t_token_type type, t_token tokens)
+{
+	while (ft_isspace(*str))
+		str++;
+	while (*str)
+	{
+		if (is_special(str))
+	}
 }
