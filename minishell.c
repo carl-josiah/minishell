@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/22 15:10:45 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/22 20:47:34 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int ac, char **av, char **env)
 {
-	t_token			*tokens;
+	// t_token			*tokens;
 	const char		*line;
 
 	(void) ac;
@@ -26,7 +26,7 @@ int main(int ac, char **av, char **env)
 			break ;
 		if (line && *line)
 			add_history(line);
-		tokens = lexer(line);
+		// tokens = lexer(line);
 		free((char *)line);
 	}
 	return (0);

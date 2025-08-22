@@ -6,7 +6,7 @@
 #    By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 11:09:47 by ccastro           #+#    #+#              #
-#    Updated: 2025/08/22 15:13:59 by ccastro          ###   ########.fr        #
+#    Updated: 2025/08/22 20:48:11 by ccastro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ INCS	= -I $(LIBDIR)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	cc $(FLAGS) $(RDL) $(INCS) $^ $(LIBFT) -o $@
+	cc $(FLAGS) $(INCS) $^ $(LIBFT) $(RDL) -o $@
 
 %.o: %.c
 	cc $(FLAGS) $(INCS) -c $< -o $@

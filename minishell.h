@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:25:49 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/22 15:07:59 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/22 20:45:58 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ typedef struct s_tree
 	struct s_tree	*right;
 }					t_tree;
 
-t_token	*lexer(const char *line);
+// t_token	*lexer(const char *line);
 
 #endif

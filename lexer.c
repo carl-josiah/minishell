@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:38:51 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/22 16:20:06 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/22 20:59:03 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,51 @@
 
 static t_token	*new_token(t_token_type type, char *value)
 {
-	t_token	*token;
+	t_token	*new_token;
 
-	token = malloc(sizeof(*token));
-	if (!token)
+	new_token = malloc(sizeof(*new_token));
+	if (!new_token)
 		return (NULL);
-	token->type = type;
-	token->value = value;
-	token->next = NULL;
-	return (token);
+	new_token->type = type;
+	new_token->value = value;
+	new_token->next = NULL;
+	return (new_token);
 }
 
-static void	add_token_back(t_token **head, t_token *new)
+static void	insert_token_end(t_token **head, t_token_type type, char *value)
 {
-	t_token	*current;
+	t_token	*curr;
 
-	if (!*head)
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = new_token(type, value);
+}
+
+static void	print_tokens(t_token *head)
+{
+	t_token	*curr;
+	
+	curr = head;
+	while (curr)
 	{
-		*head = new;
-		return ;
+		printf("[TOKEN_TYPE: %d TOKEN_VALUE: %s] -> ", curr->type, curr->value);
+		curr = curr->next;
 	}
-	current = *head;
-	while (current->next)
-		current = current->next;
-	current->next = new;
+}
+
+static void	deallocate_tokens(t_token **head)
+{
+	t_token	*curr;
+	t_token	*tmp;
+
+	curr = *head;
+	while (curr)
+	{
+		tmp = curr;
+		curr = curr->next;
+		free(tmp);
+	}
 }
 
 // t_token	*lexer(const char *line)
@@ -59,6 +80,8 @@ int	main(void)
 	t_token	*head;
 
 	head = new_token(TOKEN_CMD, "echo");
-	// free(head);
+	insert_token_end(&head, TOKEN_ARG, "-n");
+	print_tokens(head);
+	deallocate_tokens(&head);
 	return (0);
 }
