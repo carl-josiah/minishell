@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:25:49 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/20 12:18:36 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/22 15:07:59 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 
 typedef enum s_token_type
 {
-	TOKEN_WORD,
+	TOKEN_CMD,
+	TOKEN_ARG,
 	TOKEN_PIPE,
-	TOKEN_REDIR,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
 	TOKEN_RPAREN,
@@ -48,6 +50,6 @@ typedef struct s_tree
 	struct s_tree	*right;
 }					t_tree;
 
-#endif
+t_token	*lexer(const char *line);
 
-// echo hi > txt
+#endif

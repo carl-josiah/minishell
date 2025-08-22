@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccastro <ccastro@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:08:39 by ccastro           #+#    #+#             */
-/*   Updated: 2024/08/04 07:16:03 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/22 15:06:11 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strchr(const char *s, int c)
 // 	char	s[30] = "Banana Apples Oranges";
 // 	char	ss[30] = "Banana Apples Oranges";
 // 	int		c;
-// 
+
 // 	c = 'l';
 // 	printf("before ft_strchr: %s\n", s);
 // 	printf("after ft_strchr: %s\n", ft_strchr(s, c));
