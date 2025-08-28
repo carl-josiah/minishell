@@ -5,29 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 07:28:12 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/22 20:47:34 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/28 07:56:35 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/28 10:10:08 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incs/minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(void)
 {
-	// t_token			*tokens;
-	const char		*line;
+	char	*line;
 
-	(void) ac;
-	(void) av;
-	while (1)
+	while (true)
 	{
-		line = readline("bukoshell$ ");
-		if (!line)
-			break ;
-		if (line && *line)
-			add_history(line);
-		// tokens = lexer(line);
-		free((char *)line);
+		line = readline("minishell$ ");
+		free(line);		
 	}
 	return (0);
 }

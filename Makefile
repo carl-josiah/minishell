@@ -1,50 +1,40 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/14 11:09:47 by ccastro           #+#    #+#              #
-#    Updated: 2025/08/22 20:48:11 by ccastro          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME		:= minishell
 
-NAME	= minishell
+SRCS_DIR	:= srcs/
 
-SRCS	= $(addsuffix .c, minishell lexer)
+OBJS_DIR	:= objs/
 
-OBJS	= $(SRCS:%.c=%.o)
+SRCS		:= $(addprefix $(SRCS_DIR), $(addsuffix .c,	minishell \
+														))
 
-RDL		= -lreadline
+OBJS		:= $(SRCS:%.c=$(OBJS_DIR)%.o)
 
-FLAGS	= -g3 -O3
+FLAGS 		:= -Wall -Wextra -Werror
 
-LIBDIR	= libft-minishell
+RDL_FLAG 	:= -lreadline
 
-LIBFT	= $(LIBDIR)/libft.a
-
-INCS	= -I $(LIBDIR)
+RED			:= '\033[0;31m'
+WHITE		:= '\033[0;37m'
+GREEN		:= '\033[0;32m'
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	cc $(FLAGS) $(INCS) $^ $(LIBFT) $(RDL) -o $@
+$(NAME): $(OBJS)
+	@cc $^ -o $@ $(RDL_FLAG)
+	@echo $(GREEN)"created ./minishell"$(WHITE)
 
-%.o: %.c
-	cc $(FLAGS) $(INCS) -c $< -o $@
-
-$(LIBFT):
-	$(MAKE) -C $(LIBDIR)
+$(OBJS_DIR)%.o: %.c
+	@mkdir -p $(dir $@)
+	@cc $(FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
-	$(MAKE) -C $(LIBDIR) clean
+	@rm -r -f $(OBJS_DIR)
+	@echo $(RED)"removing all objs..."$(WHITE)
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBDIR) fclean
+	@rm -f $(NAME)
+	@echo $(RED)"removing executable..."$(WHITE)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean
