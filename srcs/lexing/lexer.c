@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 19:16:08 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/28 15:00:22 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/28 14:05:24 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/28 14:13:47 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/libft.h"
+#include "../../incs/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+t_token	*lexer(const char *line)
 {
-	t_list	*new;
-
-	new = (t_list *) malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	t_token	*head;
+	
+	head = NULL;
+	while (*line)
+	{
+		while ()
+	}
 }
-
-// int	main(void)
-// {
-// 	t_list	*Node = ft_lstnew("Hello");
-// 	printf("%s\n", Node->content);
-// }
