@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/23 12:52:00 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/28 18:18:29 by ccastro          ###   ########.fr       */
+/*   Created: 2025/08/28 14:38:28 by ccastro           #+#    #+#             */
+/*   Updated: 2025/08/28 14:41:12 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/libft.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
-{
-	t_list	*next;
+# include "minishell.h"
+# define OPERATOR_CHARS "<>&|()*"
 
-	if (*lst == NULL)
-		return ;
-	while (*lst)
-	{
-		next = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = next;
-	}
-	*lst = NULL;
-}
+#endif

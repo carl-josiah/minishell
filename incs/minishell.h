@@ -6,7 +6,7 @@
 /*   By: ccastro <ccastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 08:16:13 by ccastro           #+#    #+#             */
-/*   Updated: 2025/08/28 14:10:05 by ccastro          ###   ########.fr       */
+/*   Updated: 2025/08/28 14:43:37 by ccastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ typedef struct s_token
 	char			*lexeme;
 	struct s_token	*next;
 }					t_token;
+
+t_token	*lexer(char *line);
 
 #endif
